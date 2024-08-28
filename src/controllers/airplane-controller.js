@@ -1,134 +1,134 @@
-const CityService = require('../services/city-service');
-const cityService = new CityService();
+const AirplaneService = require('../services/airplane-service');
+const airplaneService = new AirplaneService();
 
-const createCity = async (req, res) => {
+const createAirplane = async (req, res) => {
     try {
-        const city = await cityService.create(req.body);
+        const airplane = await airplaneService.create(req.body);
         return res.status(201).json({
-            data: city,
+            data: airplane,
             success: true,
-            message: 'Successfully created a city',
+            message: 'Successfully created an airplane',
             err: {}
         });
     } catch (error) {
-        console.error('Error in createCity:', error.message);
+        console.error('Error in createAirplane:', error.message);
         return res.status(500).json({
             data: {},
             success: false,
-            message: 'Unable to create a city',
+            message: 'Unable to create an airplane',
             err: error.message
         });
     }
 };
 
-const deleteCity = async (req, res) => {
+const deleteAirplane = async (req, res) => {
     try {
-        const response = await cityService.delete(req.params.id);
+        const response = await airplaneService.delete(req.params.id);
         if (!response) {
             return res.status(404).json({
                 data: {},
                 success: false,
-                message: 'City not found',
+                message: 'Airplane not found',
                 err: {}
             });
         }
         return res.status(200).json({
             data: response,
             success: true,
-            message: 'Successfully deleted a city',
+            message: 'Successfully deleted an airplane',
             err: {}
         });
     } catch (error) {
-        console.error('Error in deleteCity:', error.message);
+        console.error('Error in deleteAirplane:', error.message);
         return res.status(500).json({
             data: {},
             success: false,
-            message: 'Unable to delete a city',
+            message: 'Unable to delete an airplane',
             err: error.message
         });
     }
 };
 
-const getCity = async (req, res) => {
+const getAirplane = async (req, res) => {
     try {
-        const response = await cityService.get(req.params.id);
+        const response = await airplaneService.get(req.params.id);
         if (!response) {
             return res.status(404).json({
                 data: {},
                 success: false,
-                message: 'City not found',
+                message: 'Airplane not found',
                 err: {}
             });
         }
         return res.status(200).json({
             data: response,
             success: true,
-            message: 'Successfully fetched a city',
+            message: 'Successfully fetched an airplane',
             err: {}
         });
     } catch (error) {
-        console.error('Error in getCity:', error.message);
+        console.error('Error in getAirplane:', error.message);
         return res.status(500).json({
             data: {},
             success: false,
-            message: 'Unable to fetch a city',
+            message: 'Unable to fetch an airplane',
             err: error.message
         });
     }
 };
 
-const updateCity = async (req, res) => {
+const updateAirplane = async (req, res) => {
     try {
-        const response = await cityService.update(req.params.id, req.body);
+        const response = await airplaneService.update(req.params.id, req.body);
         if (!response) {
             return res.status(404).json({
                 data: {},
                 success: false,
-                message: 'City not found',
+                message: 'Airplane not found',
                 err: {}
             });
         }
         return res.status(200).json({
             data: response,
             success: true,
-            message: 'Successfully updated a city',
+            message: 'Successfully updated an airplane',
             err: {}
         });
     } catch (error) {
-        console.error('Error in updateCity:', error.message);
+        console.error('Error in updateAirplane:', error.message);
         return res.status(500).json({
             data: {},
             success: false,
-            message: 'Unable to update a city',
+            message: 'Unable to update an airplane',
             err: error.message
         });
     }
 };
 
-const getAllCities = async (req, res) => {
+const getAllAirplanes = async (req, res) => {
     try {
-        const response = await cityService.getAll();
+        const response = await airplaneService.getAll();
         return res.status(200).json({
             data: response,
             success: true,
-            message: 'Successfully fetched all cities',
+            message: 'Successfully fetched all airplanes',
             err: {}
         });
     } catch (error) {
-        console.error('Error in getAllCities:', error.message);
+        console.error('Error in getAllAirplanes:', error.message);
         return res.status(500).json({
             data: {},
             success: false,
-            message: 'Unable to fetch all cities',
+            message: 'Unable to fetch all airplanes',
             err: error.message
         });
     }
 };
 
 module.exports = {
-    createCity,
-    deleteCity,
-    getCity,
-    updateCity,
-    getAllCities
+    createAirplane,
+    deleteAirplane,
+    getAirplane,
+    updateAirplane,
+    getAllAirplanes
 };
