@@ -4,6 +4,7 @@ const router = express.Router();
 const CityController = require('../../controllers/city-controller');
 const AirplaneController = require('../../controllers/airplane-controller');
 const AirportController = require('../../controllers/airport-controller');
+const FlightController = require('../../controllers/flight-controller');
 
 
 router.post('/city' , CityController.createCity);//creates a particular city
@@ -24,5 +25,12 @@ router.delete('/airport/:id' , AirportController.deleteAirport);
 router.get('/airport/:id' , AirportController.getAirport);
 router.get('/airport' , AirportController.getAllAirports);
 router.patch('/airport/:id' , AirportController.updateAirport);
+
+
+router.post('/flight' , FlightController.createFlight);
+router.delete('/flight/:id' , FlightController.deleteFlight);
+router.get('/flight/:id' , FlightController.getFlight);
+router.get('/flight' , FlightController.getAllFlights);
+router.patch('/flight/:id' , FlightController.updateFlight);
 
 module.exports = router;
