@@ -126,10 +126,33 @@ const getAllFlights = async (req, res) => {
     }
 };
 
+
+const searchFlights = async (req, res) => {
+    try {
+        const flights = await flightService.searchFlights(req.query);
+        return res.status(200).json({
+            data: flights,
+            success: true,
+            message: 'Flights retrieved successfully',
+            err: {}
+        });
+    } catch (error) {
+        console.error('Error in searchFlights:', error.message);
+        return res.status(500).json({
+            data: {},
+            success: false,
+            message: 'Error searching flights',
+            err: error.message
+        });
+    }
+};
+
+
 module.exports = {
     createFlight,
     deleteFlight,
     getFlight,
     updateFlight,
-    getAllFlights
+    getAllFlights,
+    searchFlights
 };

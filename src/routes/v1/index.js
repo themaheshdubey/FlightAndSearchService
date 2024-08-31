@@ -33,4 +33,7 @@ router.get('/flight/:id' , FlightController.getFlight);
 router.get('/flight' , FlightController.getAllFlights);
 router.patch('/flight/:id' , FlightController.updateFlight);
 
+
+router.get('/search-flights' , FlightController.searchFlights);
+
 module.exports = router;
