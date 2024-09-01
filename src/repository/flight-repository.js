@@ -36,7 +36,8 @@ class FlightRepository extends CrudRepository {
         const endOfDay = new Date(dateOfJourney);
         endOfDay.setHours(23, 59, 59, 999); // Set time to 23:59:59.999
 
-        // Find flights based on airport IDs and departure date
+
+        // Find flights based on criteria
         const flights = await Flight.findAll({
             where: {
                 departureAirportId: { [Op.in]: startAirportIds },
@@ -47,6 +48,7 @@ class FlightRepository extends CrudRepository {
                 }
             }
         });
+
 
         return flights;
 
