@@ -18,17 +18,20 @@ class FlightRepository extends CrudRepository {
     }
 
 
-    async findByCriteria(filter) {
+    async findByCriteria(filter , paginationOptions) {
 
         const {startCityName , destinationCityName , dateOfJourney} = filter;
+        const { page, limit } = paginationOptions;
+
 
         // Find airport IDs for start and destination cities
         const startAirportIds = await this.findAirportIdsByCityName(startCityName);
         const destinationAirportIds = await this.findAirportIdsByCityName(destinationCityName);
 
         if (startAirportIds.length === 0 || destinationAirportIds.length === 0) {
-            return [];
+            return { flights: [], totalFlights: 0, totalPages: 0, currentPage: page };
         }
+    
 
         // Create a range for the provided date (midnight to midnight)
         const startOfDay = new Date(dateOfJourney);
@@ -37,20 +40,23 @@ class FlightRepository extends CrudRepository {
         endOfDay.setHours(23, 59, 59, 999); // Set time to 23:59:59.999
 
 
-        // Find flights based on criteria
-        const flights = await Flight.findAll({
+        // Find flights with pagination
+        const { count, rows: flights } = await Flight.findAndCountAll({
             where: {
                 departureAirportId: { [Op.in]: startAirportIds },
                 arrivalAirportId: { [Op.in]: destinationAirportIds },
-                departureTime: {
-                    [Op.gte]: startOfDay,
-                    [Op.lte]: endOfDay
-                }
-            }
+                departureTime: { [Op.gte]: startOfDay, [Op.lte]: endOfDay }
+            },
+            limit: limit,
+            offset: (page - 1) * limit
         });
 
-
-        return flights;
+        return {
+            flights,
+            totalFlights: count,
+            totalPages: Math.ceil(count / limit),
+            currentPage: page
+        };
 
     }
 

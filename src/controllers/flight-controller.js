@@ -129,13 +129,21 @@ const getAllFlights = async (req, res) => {
 
 const searchFlights = async (req, res) => {
     try {
-        const flights = await flightService.searchFlights(req.query);
+        const { page = 1, limit = 10 } = req.query;
+        const paginationOptions = { page: parseInt(page), limit: parseInt(limit) };
+
+        const flightsData = await flightService.searchFlights(req.query, paginationOptions);
+
         return res.status(200).json({
-            data: flights,
+            data: flightsData.flights,
+            totalFlights: flightsData.totalFlights,
+            totalPages: flightsData.totalPages,
+            currentPage: flightsData.currentPage,
             success: true,
             message: 'Flights retrieved successfully',
             err: {}
         });
+
     } catch (error) {
         console.error('Error in searchFlights:', error.message);
         return res.status(500).json({

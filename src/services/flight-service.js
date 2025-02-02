@@ -8,7 +8,7 @@ class FlightService extends CrudService {
         this.flightRepository = flightRepositoryInstance;
     }
 
-    async searchFlights(filter) {
+    async searchFlights(filter , paginationOptions) {
 
         const {startCityName, destinationCityName, dateOfJourney} = filter;
 
@@ -17,7 +17,7 @@ class FlightService extends CrudService {
             throw new Error('Missing required parameters: startCityName, destinationCityName, and dateOfJourney are required.');
         }
 
-        const flights = await this.flightRepository.findByCriteria(filter);
+        const flights = await this.flightRepository.findByCriteria(filter , paginationOptions);
         return flights;
     }
 
